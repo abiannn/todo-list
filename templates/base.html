@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aplikasi Todo</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lobster&family=Noto+Sans:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+    <style>
+      body {
+        font-family: "Noto Sans", sans-serif;
+        font-size: 16px;
+        background: linear-gradient(-45deg,#87CEEB,  #236A87, #00bfff, #1e90ff);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+        height: 100vh;
+        overflow: hidden;
+        margin: 0;
+      }
+
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      h1.ui.header {
+        font-family: "Lobster", cursive;
+        font-size: 48px;
+        padding-bottom: 30px;
+        color: #fff;
+        z-index: 4;
+        position: relative;
+      }
+
+      .ui.container {
+        max-height: 80vh;
+        overflow-y: scroll;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        z-index: 5;
+      }
+
+      .ui.container::-webkit-scrollbar {
+        display: none;
+      }
+
+      h2 {
+        font-size: 16px;
+        color: white;
+      }
+
+      .ui.form input {
+        font-size: 12px;
+      }
+
+      .ui.segment {
+        font-size: 12px;
+      }
+
+      .ui .big .header {
+        font-size: 12px !important;
+      }
+
+      .ui.label {
+        font-size: 12px;
+      }
+
+      .ui.gray.label {
+        font-size: 12px !important;
+      }
+
+      .ui.blue.button,
+      .ui.red.button,
+      .ui.green.button {
+        font-size: 12px !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div style="margin-top: 50px" class="ui container">
+      <h1 class="ui center aligned header">Aplikasi Todo-List</h1>
+
+      <form class="ui form" action="/add" method="post">
+        <div class="field">
+          <h2>Judul Todo</h2>
+          <input
+            type="text"
+            name="title"
+            placeholder="Masukkan daftar tugas atau pekerjaan yang akan dilakukan"
+          /><br />
+        </div>
+        <button class="ui blue button" type="submit">Tambah</button>
+      </form>
+
+      <hr />
+
+      {% for todo in todo_list %}
+      <div class="ui segment">
+        <p class="ui big header">{{ todo.id }} | {{ todo.title }}</p>
+
+        {% if todo.complete == False %}
+        <span class="ui gray label">Belum Selesai</span>
+        {% else %}
+        <span class="ui green label">Selesai</span>
+        {% endif %}
+
+        <a class="ui blue button" href="/update/{{ todo.id }}">Perbarui</a>
+        <a class="ui red button" href="/delete/{{ todo.id }}">Hapus</a>
+      </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>
